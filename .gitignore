@@ -1,6 +1,6 @@
 dmenu
 dmenu_run
-dmenu_patch
+dmenu_path
 stest
 
 *.o
