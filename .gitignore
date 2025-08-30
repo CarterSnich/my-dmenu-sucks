@@ -1,6 +1,9 @@
-./dmenu
-./dmenu_run
-./stest
+dmenu
+dmenu_run
+stest
 
-./*.*.o
-./*.*.rej
+*.o
+*.rej
+*.orig
+*.*.rej
+*.*.orig
