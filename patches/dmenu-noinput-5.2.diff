@@ -1,6 +1,6 @@
-diff -up dmenu/config.def.h dmenu-noinputlinesbelowpromptfullwidth/config.def.h
+diff -up dmenu/config.def.h dmenu-noinput/config.def.h
 --- dmenu/config.def.h	2024-03-03 12:59:00.545293913 -0600
-+++ dmenu-noinputlinesbelowpromptfullwidth/config.def.h	2024-03-03 12:50:07.883388742 -0600
++++ dmenu-noinput/config.def.h	2024-03-03 10:00:59.974900500 -0600
 @@ -2,6 +2,7 @@
  /* Default settings; can be overriden by command line. */
  
@@ -9,10 +9,10 @@ diff -up dmenu/config.def.h dmenu-noinputlinesbelowpromptfullwidth/config.def.h
  /* -fn option overrides fonts[0]; default X11 font or font set */
  static const char *fonts[] = {
  	"monospace:size=10"
-diff -up dmenu/dmenu.c dmenu-noinputlinesbelowpromptfullwidth/dmenu.c
+diff -up dmenu/dmenu.c dmenu-noinput/dmenu.c
 --- dmenu/dmenu.c	2024-03-03 12:59:00.545293913 -0600
-+++ dmenu-noinputlinesbelowpromptfullwidth/dmenu.c	2024-03-03 15:06:12.469545907 -0600
-@@ -147,30 +147,32 @@ drawmenu(void)
++++ dmenu-noinput/dmenu.c	2024-03-03 12:15:44.416277776 -0600
+@@ -147,7 +147,7 @@ drawmenu(void)
  {
  	unsigned int curpos;
  	struct item *item;
@@ -21,11 +21,9 @@ diff -up dmenu/dmenu.c dmenu-noinputlinesbelowpromptfullwidth/dmenu.c
  
  	drw_setscheme(drw, scheme[SchemeNorm]);
  	drw_rect(drw, 0, 0, mw, mh, 1, 1);
- 
- 	if (prompt && *prompt) {
+@@ -156,15 +156,17 @@ drawmenu(void)
  		drw_setscheme(drw, scheme[SchemeSel]);
--		x = drw_text(drw, x, 0, promptw, bh, lrpad / 2, prompt, 0);
-+		x = drw_text(drw, x, 0, !draw_input ? mw : promptw, bh, lrpad / 2, prompt, 0);
+ 		x = drw_text(drw, x, 0, promptw, bh, lrpad / 2, prompt, 0);
  	}
 -	/* draw input field */
 -	w = (lines > 0 || !matches) ? mw - x : inputw;
@@ -48,13 +46,6 @@ diff -up dmenu/dmenu.c dmenu-noinputlinesbelowpromptfullwidth/dmenu.c
  	}
  
  	if (lines > 0) {
- 		/* draw vertical list */
- 		for (item = curr; item != next; item = item->right)
--			drawitem(item, x, y += bh, mw - x);
-+			drawitem(item, (!draw_input && prompt && *prompt) ? x - mw : x - promptw, y += bh, mw);
- 	} else if (matches) {
- 		/* draw horizontal list */
- 		x += inputw;
 @@ -178,8 +180,8 @@ drawmenu(void)
  		if (curr->left) {
  			drw_setscheme(drw, scheme[SchemeNorm]);
