@@ -5,7 +5,7 @@ static int topbar = 1;                      /* -b  option; if 0, dmenu appears a
 static int draw_input = 1;                  /* -noi option; if 0, the input will not be drawn by default */
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
-	"monospace:size=10"
+	"ProggyClean Nerd Font:size=12"
 };
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
 static const char *colors[SchemeLast][2] = {
